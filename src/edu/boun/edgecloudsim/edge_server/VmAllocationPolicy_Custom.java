@@ -50,7 +50,7 @@ public class VmAllocationPolicy_Custom extends VmAllocationPolicy {
 	public boolean allocateHostForVm(Vm vm) {
 		boolean result = false;
 
-		if (!getVmTable().containsKey(vm.getUid())) { // if this vm was not created
+		if (!getVmTable().containsKey(vm.getId())) { // if this vm was not created
 			boolean vmFound = false;
 			int vmCounter = 0;
 			int hostIndex = 0;
@@ -85,7 +85,7 @@ public class VmAllocationPolicy_Custom extends VmAllocationPolicy {
 				result = host.vmCreate(vm);
 	
 				if (result) { // if vm were succesfully created in the host
-					getVmTable().put(vm.getUid(), host);
+					getVmTable().put(Integer.toString(vm.getId()), host);
 					createdVmNum++;
 					Log.formatLine("%.2f: VM #" + vm.getId() + " has been allocated to the host #" + host.getId(),CloudSim.clock());
 					result = true;
@@ -99,7 +99,7 @@ public class VmAllocationPolicy_Custom extends VmAllocationPolicy {
 	@Override
 	public boolean allocateHostForVm(Vm vm, Host host) {
 		if (host.vmCreate(vm)) { // if vm has been succesfully created in the host
-			getVmTable().put(vm.getUid(), host);
+			getVmTable().put(Integer.toString(vm.getId()), host);
 			createdVmNum++;
 			
 			Log.formatLine("%.2f: VM #" + vm.getId() + " has been allocated to the host #" + host.getId(),CloudSim.clock());
@@ -118,7 +118,7 @@ public class VmAllocationPolicy_Custom extends VmAllocationPolicy {
 
 	@Override
 	public void deallocateHostForVm(Vm vm) {
-		Host host = getVmTable().remove(vm.getUid());
+		Host host = getVmTable().remove(vm.getId());
 		if (host != null) {
 			host.vmDestroy(vm);
 		}
@@ -126,12 +126,12 @@ public class VmAllocationPolicy_Custom extends VmAllocationPolicy {
 
 	@Override
 	public Host getHost(Vm vm) {
-		return getVmTable().get(vm.getUid());
+		return getVmTable().get(vm.getId());
 	}
 
 	@Override
 	public Host getHost(int vmId, int userId) {
-		return getVmTable().get(Vm.getUid(userId, vmId));
+		return getVmTable().get(Vm.getId(userId, vmId));
 	}
 
 	public static int getCreatedVmNum(){
