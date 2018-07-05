@@ -22,6 +22,7 @@ public class Task extends Cloudlet {
 	private Location submittedLocation;
 	private int mobileDeviceId;
 	private int hostIndex;
+	private int vmId;
 
 	public Task(int _mobileDeviceId, int cloudletId, long cloudletLength, int pesNumber,
 			long cloudletFileSize, long cloudletOutputSize,
@@ -62,5 +63,11 @@ public class Task extends Cloudlet {
 
 	public SimSettings.APP_TYPES getTaskType(){
 		return type;
+	}
+
+
+	public int getVmId() {
+		// TODO Auto-generated method stub
+		return vmId;
 	}
 }
