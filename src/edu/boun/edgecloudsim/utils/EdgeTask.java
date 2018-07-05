@@ -15,7 +15,7 @@ import org.apache.commons.math3.distribution.ExponentialDistribution;
 import edu.boun.edgecloudsim.core.SimSettings;
 import edu.boun.edgecloudsim.core.SimSettings.APP_TYPES;
 
-public class EdgeTask {
+public class EdgeTask{
     public APP_TYPES taskType;
     public double startTime;
     public long length, inputFileSize, outputFileSize;
@@ -23,6 +23,7 @@ public class EdgeTask {
     public int mobileDeviceId;
     
     public EdgeTask(int _mobileDeviceId, APP_TYPES _taskType, double _startTime, ExponentialDistribution[][] expRngList) {
+    	
     	mobileDeviceId=_mobileDeviceId;
     	startTime=_startTime;
     	taskType=_taskType;
