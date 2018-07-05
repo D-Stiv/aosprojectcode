@@ -57,13 +57,13 @@ public class Cloudlet{
 		return utilizationModelBw;
 	}
 
-	public int getVmId() {
-		// TODO Auto-generated method stub
+	public int getVmId() {		
 		return 0;
 	}
 
 	public void setUserId(int id) {
-		// TODO Auto-generated method stub
+		
 		
 	}
+	
 }
