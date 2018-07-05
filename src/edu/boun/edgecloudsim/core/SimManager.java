@@ -150,7 +150,7 @@ public class SimManager extends SimEntity {
 			switch (ev.getTag()) {
 			case CREATE_TASK:
 				try {
-					EdgeTask edgeTask = (EdgeTask) ev.getData();
+					EdgeTask edgeTask = (EdgeTask) ev.getNewData();
 					mobileDeviceManager.submitTask(edgeTask);						
 				} catch (Exception e) {
 					e.printStackTrace();
