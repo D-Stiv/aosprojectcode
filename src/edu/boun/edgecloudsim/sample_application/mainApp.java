@@ -35,11 +35,27 @@ public class mainApp {
 		//enable console ourput and file output of this application
 		SimLogger.enablePrintLog();
 		
-		int iterationNumber = 1;
+		int iterationNumber = 2;
 		String configFile = "";
 		String outputFolder = "";
 		String edgeDevicesFile = "";
 		String applicationsFile = "";
+		
+		args = new String[5];
+		
+		args[0] = "scripts/sample_application/config/example_config.properties";
+		args[2] = "scripts/sample_application/config/applications_example.xml";
+		args[1] = "scripts/sample_application/config/edge_devices_example.xml";
+		args[3] = "sim_results/ite" + iterationNumber;
+		args[4] = "2";
+		
+		/*
+		args[0] = "scripts/sample_application/config/default_config.properties";
+		args[2] = "scripts/sample_application/config/applications.xml";
+		args[1] = "scripts/sample_application/config/edge_devices.xml";
+		args[3] = "sim_results/ite" + iterationNumber;
+		args[4] = "2"; 
+		*/
 		if (args.length == 5){
 			configFile = args[0];
 			edgeDevicesFile = args[1];
@@ -66,6 +82,7 @@ public class mainApp {
 			SimLogger.enableFileLog();
 			SimUtils.cleanOutputFolder(outputFolder);
 		}
+		
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date SimulationStartDate = Calendar.getInstance().getTime();
