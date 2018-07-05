@@ -3,29 +3,30 @@ package org.cloudbus.cloudsim.core;
 import edu.boun.edgecloudsim.utils.EdgeTask;
 
 public class SimEntity {
+	private String name;
+	private int Id;
 
-	public SimEntity(String string) {
-		// TODO Auto-generated constructor stub
+	public SimEntity(String name) {
+		this.name = name;
+		Id = 9001;
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	public void startEntity() {
-		// TODO Auto-generated method stub
+		System.out.println("Entity started ...");
 		
 	}
 
 	public int getId(){
-		return 0;
+		return Id;
 		
 	}
 	
 	public void shutdownEntity() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Entity shut down ...");
 	}
 
 	public void processEvent(SimEvent ev) {
