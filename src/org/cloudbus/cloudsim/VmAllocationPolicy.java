@@ -1,24 +1,51 @@
 package org.cloudbus.cloudsim;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class VmAllocationPolicy {
 
-	private Map<String, Host> hostList;
+	private HashMap<Vm, Host> hostList;
 
 	public VmAllocationPolicy(List<? extends Host> list) {
-		// TODO Auto-generated constructor stub
+		hostList = new HashMap<>();
+		int i = 0;
+		Iterator<Entry<Vm, Host>> entries = hostList.entrySet().iterator();
+		while (entries.hasNext() && i < list.size()) {
+			Entry<Vm, Host> entry = entries.next();
+			entry.setValue(list.get(i));
+			i++;
+		}
+		//to verify the initialization of the hostList
+		while (entries.hasNext()) {
+	  		Entry<Vm, Host> entry = entries.next();
+	  		System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+		}
 	}
 
 	public boolean allocateHostForVm(Vm vm) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean found = false;
+		Iterator<Entry<Vm, Host>> entries = hostList.entrySet().iterator();
+		while (entries.hasNext()) {
+			Entry<Vm, Host> entry = entries.next();
+			if(entry.getKey().equals(vm))
+				found = true;
+		}
+		return found;
 	}
 
 	public boolean allocateHostForVm(Vm vm, Host host) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean found = false;
+		Iterator<Entry<Vm, Host>> entries = hostList.entrySet().iterator();
+		while (entries.hasNext()) {
+			Entry<Vm, Host> entry = entries.next();
+			if(entry.getKey().equals(vm) && entry.getValue().equals(host))
+				found = true;
+		}
+		return found;
 	}
 
 	public List<Map<String, Object>> optimizeAllocation(List<? extends Vm> vmList) {
@@ -31,7 +58,7 @@ public class VmAllocationPolicy {
 		
 	}
 
-	public Map<String, Host> getHostList() {
+	public Map<Vm, Host> getHostList() {
 		// TODO Auto-generated method stub
 		return hostList;
 	}
