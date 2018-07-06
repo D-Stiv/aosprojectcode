@@ -42,20 +42,20 @@ public class mainApp {
 		String applicationsFile = "";
 		
 		args = new String[5];
-		
+		/*
 		args[0] = "scripts/sample_application/config/example_config.properties";
 		args[2] = "scripts/sample_application/config/applications_example.xml";
 		args[1] = "scripts/sample_application/config/edge_devices_example.xml";
 		args[3] = "sim_results/ite" + iterationNumber;
 		args[4] = "2";
 		
-		/*
-		args[0] = "scripts/sample_application/config/default_config.properties";
+		*/
+		args[0] = "scripts/sample_application/config/bestFit_config.properties";
 		args[2] = "scripts/sample_application/config/applications.xml";
 		args[1] = "scripts/sample_application/config/edge_devices.xml";
 		args[3] = "sim_results/ite" + iterationNumber;
 		args[4] = "2"; 
-		*/
+		
 		if (args.length == 5){
 			configFile = args[0];
 			edgeDevicesFile = args[1];

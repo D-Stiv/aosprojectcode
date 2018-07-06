@@ -24,9 +24,11 @@ import edu.boun.edgecloudsim.utils.SimLogger;
 import edu.boun.edgecloudsim.utils.SimUtils;
 
 public class IdleActiveLoadGenerator extends LoadGeneratorModel{
+	private static int multMD = 1;
+	private static int multST = 2;
 
 	public IdleActiveLoadGenerator(int _numberOfMobileDevices, double _simulationTime, String _simScenario) {
-		super(_numberOfMobileDevices, _simulationTime, _simScenario);
+		super(multMD*_numberOfMobileDevices, multST*_simulationTime, _simScenario);
 	}
 
 	@Override
@@ -89,6 +91,8 @@ public class IdleActiveLoadGenerator extends LoadGeneratorModel{
 				taskList.add(new EdgeTask(i,randomTaskType, virtualTime, expRngList));
 			}
 		}
+		System.out.println("The number of tasks created is: " +  taskList.size());
+
 	}
 
 }
