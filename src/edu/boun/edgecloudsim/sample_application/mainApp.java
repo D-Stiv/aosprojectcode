@@ -42,20 +42,20 @@ public class mainApp {
 		String applicationsFile = "";
 		
 		args = new String[5];
-		/*
+		
 		args[0] = "scripts/sample_application/config/example_config.properties";
 		args[2] = "scripts/sample_application/config/applications_example.xml";
 		args[1] = "scripts/sample_application/config/edge_devices_example.xml";
 		args[3] = "sim_results/ite" + iterationNumber;
 		args[4] = "2";
 		
-		*/
+		/*
 		args[0] = "scripts/sample_application/config/bestFit_config.properties";
 		args[2] = "scripts/sample_application/config/applications.xml";
 		args[1] = "scripts/sample_application/config/edge_devices.xml";
 		args[3] = "sim_results/ite" + iterationNumber;
 		args[4] = "2"; 
-		
+		*/
 		if (args.length == 5){
 			configFile = args[0];
 			edgeDevicesFile = args[1];
@@ -89,12 +89,14 @@ public class mainApp {
 		String now = df.format(SimulationStartDate);
 		SimLogger.printLine("Simulation started at " + now);
 		SimLogger.printLine("----------------------------------------------------------------------");
+		
+		int simTime = (int) SS.getSimulationTime();
 
 		for(int j=SS.getMinNumOfMobileDev(); j<=SS.getMaxNumOfMobileDev(); j+=SS.getMobileDevCounterSize())
 		{
-			for(int k=0; k<SS.getSimulationScenarios().length; k++)
+			for(int k=0; k<SS.getSimulationScenarios().length; k++)		//SINGLE_TIER, TWO_TIER, TWO_TIER_WITH_EO
 			{
-				for(int i=0; i<SS.getOrchestratorPolicies().length; i++)
+				for(int i=0; i<SS.getOrchestratorPolicies().length; i++)	//FIRST_FIT, NEXT_FIT, RANDOM_FIT, BEST_FIT, WORST_FIT
 				{
 					String simScenario = SS.getSimulationScenarios()[k];
 					String orchestratorPolicy = SS.getOrchestratorPolicies()[i];
@@ -140,6 +142,8 @@ public class mainApp {
 				}//End of orchestrators loop
 			}//End of scenarios loop
 		}//End of mobile devices loop
+		
+		System.out.println("*simulation time: " + simTime/60);
 
 		Date SimulationEndDate = Calendar.getInstance().getTime();
 		now = df.format(SimulationEndDate);

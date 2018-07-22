@@ -14,6 +14,9 @@
 package edu.boun.edgecloudsim.task_generator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.apache.commons.math3.distribution.ExponentialDistribution;
 
@@ -23,12 +26,17 @@ import edu.boun.edgecloudsim.utils.EdgeTask;
 import edu.boun.edgecloudsim.utils.SimLogger;
 import edu.boun.edgecloudsim.utils.SimUtils;
 
+
 public class IdleActiveLoadGenerator extends LoadGeneratorModel{
-	private static int multMD = 1;
-	private static int multST = 2;
+	
+	private HashMap<String, Integer> mapTaskType = new HashMap<String, Integer>();
 
 	public IdleActiveLoadGenerator(int _numberOfMobileDevices, double _simulationTime, String _simScenario) {
-		super(multMD*_numberOfMobileDevices, multST*_simulationTime, _simScenario);
+		super(_numberOfMobileDevices, _simulationTime, _simScenario);
+		mapTaskType.put("AUGMENTED_REALITY", 0);
+		mapTaskType.put("HEALTH_APP", 0);
+		mapTaskType.put("HEAVY_COMP_APP", 0);
+		mapTaskType.put("INFOTAINMENT_APP", 0);
 	}
 
 	@Override
@@ -48,9 +56,13 @@ public class IdleActiveLoadGenerator extends LoadGeneratorModel{
 			expRngList[i][2] = new ExponentialDistribution(SimSettings.getInstance().getTaskLookUpTable()[i][7]);
 		}
 		
+		int size = 0, diff = 0;
 		//Each mobile device utilizes an app type (task type)
 		for(int i=0; i<numberOfMobileDevices; i++) {
 			APP_TYPES randomTaskType = null;
+			
+		//	randomTaskType = SimSettings.APP_TYPES.AUGMENTED_REALITY;	//AUGMENTED_REALITY, HEALTH_APP, HEAVY_COMP_APP, INFOTAINMENT_APP
+			
 			double taskTypeSelector = SimUtils.getRandomDoubleNumber(0,100);
 			double taskTypePercentage = 0;
 			for (SimSettings.APP_TYPES taskType : SimSettings.APP_TYPES.values()) {
@@ -90,9 +102,36 @@ public class IdleActiveLoadGenerator extends LoadGeneratorModel{
 				
 				taskList.add(new EdgeTask(i,randomTaskType, virtualTime, expRngList));
 			}
+			diff = taskList.size() - size;
+			updateTaskNumberPerType(randomTaskType.toString(), diff);
+			size = taskList.size();
 		}
-		System.out.println("The number of tasks created is: " +  taskList.size());
+		System.out.println("*The number of tasks created is: " +  taskList.size() + "\n");
+		printResult(taskList.size());
+		System.out.println("");
+	}
 
+	private void updateTaskNumberPerType(String type, int diff) {
+		Iterator<Entry<String, Integer>> i = mapTaskType.entrySet().iterator();
+		while(i.hasNext()){
+			Entry<String, Integer> entry = i.next();
+			String k = ((Entry<String,Integer>) entry).getKey();
+			if(type.equals(k)){
+				Integer v = mapTaskType.get(k);
+				v += diff;
+				mapTaskType.put(k, v);
+				break;
+			}
+		}
+	}
+	private void printResult(int totalNumberOfTasks) {
+		Iterator<Entry<String, Integer>> i = mapTaskType.entrySet().iterator();
+		while(i.hasNext()){
+			Entry<String, Integer> entry = i.next();
+			String k = ((Entry<String,Integer>) entry).getKey();
+			Integer v = mapTaskType.get(k);
+			System.out.println("Number of tasks of type: " + k + " is: " + v + ", percentage is: " + 100*v/totalNumberOfTasks + "%");
+		}
 	}
 
 }
